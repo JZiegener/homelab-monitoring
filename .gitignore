@@ -1,3 +1,5 @@
-*.db
+
 prometheus/data/
+grafana/
+*.db
 .env
