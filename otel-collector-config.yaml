@@ -1,0 +1,36 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  influxdb:
+    endpoint: "0.0.0.0:8086"
+  
+
+exporters:
+  prometheus:
+    endpoint: "0.0.0.0:9101"
+    const_labels:
+      label1: proxmox
+  logging:
+ 
+processors:
+  batch:
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+    metrics:
+      receivers: [influxdb]
+      processors: [batch]
+      exporters: [prometheus,logging]
