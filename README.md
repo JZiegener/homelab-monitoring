@@ -25,7 +25,7 @@ PROMETHEUS_STORAGE=~/homelab-monitoring/prometheus/
 ```
 note: usernum is used to allow the containers write permissions to the mapped volumes
 
-Setup outside repository
+## Setup external dependencies
     SNMP has to be enabled on router to get any data
     Proxmox external metrics must be set up for the influxdb import 
         use HTTP import
@@ -36,8 +36,8 @@ Setup outside repository
 Storage:
 
 
-Ports exposed on host machine.
-    This is mostly to 
+## Ports exposed on host machine.
+
     3100 : Loki
     3000 : grafana 
     9090 : Prometheus
