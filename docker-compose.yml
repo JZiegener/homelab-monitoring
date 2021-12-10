@@ -61,10 +61,10 @@ services:
     ports:
       - 9617:9617
     environment:
-      PIHOLE_HOSTNAME: "${PI_HOLE_USERNAME}"
-      PIHOLE_PASSWORD: "${PI_HOLE_PASSWORD}"
+      PIHOLE_HOSTNAME: "${PI_HOLE_HOSTNAME}"
+      PIHOLE_API_TOKEN: "${PI_HOLE_TOKEN}"
       INTERVAL: "30s"
-      PORT: "9617"
+      #PORT: "9617"
     restart: unless-stopped
     networks:
       - loki
