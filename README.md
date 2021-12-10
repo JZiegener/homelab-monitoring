@@ -17,14 +17,13 @@ This file is intentionally NOT stored in the repository to prevent passwords and
 PI_HOLE_USERNAME=username 
 PI_HOLE_PASSWORD=password
 
+USERNUM=1000
 LOKI_STORAGE=~/homelab-monitoring/loki/
 PROMTAIL_STORAGE=~/homelab-monitoring/promtail/
 GRAFANA_STORAGE=~/homelab-monitoring/grafana/
 PROMETHEUS_STORAGE=~/homelab-monitoring/prometheus/
-
-
 ```
-
+note: usernum is used to allow the containers write permissions to the mapped volumes
 
 Setup outside repository
     SNMP has to be enabled on router to get any data

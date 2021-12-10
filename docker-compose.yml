@@ -4,6 +4,7 @@ networks:
 services:
   loki:
     image: grafana/loki:2.4.0
+    user: "1000:1000"
     volumes:
       - ${LOKI_STORAGE}:/tmp/loki
       - ./loki-config.yml:/etc/loki/loki-config.yml
@@ -26,7 +27,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    user: "1000"
+    user: "1000:1000"
     volumes:
     - ${GRAFANA_STORAGE}:/var/lib/grafana/
     ports:
@@ -51,7 +52,7 @@ services:
     image: prom/snmp-exporter
     restart: unless-stopped
     volumes:
-      - .snmp.yml:/etc/snmp_exporter/snmp.yml
+      - ./snmp.yml:/etc/snmp_exporter/snmp.yml
     ports:
       - "9116:9116"
       
