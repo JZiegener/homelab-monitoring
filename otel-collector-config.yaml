@@ -14,7 +14,14 @@ exporters:
   logging:
  
 processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 4000
+    spike_limit_mib: 800
   batch:
+  batch/2:
+    send_batch_size: 10000
+    timeout: 10s
 
 extensions:
   health_check:
@@ -28,9 +35,9 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [memory_limiter,batch]
       exporters: [logging]
     metrics:
       receivers: [influxdb]
-      processors: [batch]
+      processors: [memory_limiter,batch]
       exporters: [prometheus,logging]

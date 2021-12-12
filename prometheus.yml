@@ -41,3 +41,7 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       - targets: ['192.168.2.161:9182']
+  - job_name: 'otel-windows'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['192.168.2.161:9101']
