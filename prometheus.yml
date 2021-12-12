@@ -37,4 +37,7 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       - targets: ['192.168.2.113:8888']
-  
+  - job_name: 'window-node'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['192.168.2.161:9182']
