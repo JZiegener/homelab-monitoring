@@ -1,15 +1,19 @@
-Docker set up for home lab monitoring
+# Summary
+docker-compose setup for homelab monitoring
 
-Stack:
-    Prometheus: Metrics
-    Loki: Logs
-    promtail: More log scraping
-    Grafana: Dashboards / analysis
-    OpenTelemetry: metrics format conversion
-    snmp-exporter: publish prometheus stats from snmp (router stats)
-    pi-hole-exporter: dashboarding for pi-hole based dashboarding
+# Details
 
-Enviroment variables
+## Stack:
+- Prometheus: Metrics Storage
+- Loki: Log storage
+- promtail: Docker Log Scraping
+- Grafana: Dashboards / analysis
+- OpenTelemetry: Host metrics + agent + translation
+- snmp-exporter: publish prometheus stats from snmp (router stats)
+- pi-hole-exporter: Prometheus statistics from pi-hole
+
+## Enviroment variables:
+
 This file is intentionally NOT stored in the repository to prevent passwords and other senstive information from being imported into this repository. Username and password must be configured for the pi-hole scraper. Storage can be set to what ever location is desired
 
 .env is as follows:
@@ -25,18 +29,17 @@ PROMETHEUS_STORAGE=~/homelab-monitoring/prometheus/
 ```
 note: usernum is used to allow the containers write permissions to the mapped volumes
 
-## Setup external dependencies
+## External dependencies
     SNMP has to be enabled on router to get any data
     Proxmox external metrics must be set up for the influxdb import 
         use HTTP import
     promtail is configured to scrape docker logs from the host machine.
         Configuration instructions are available here: https://techno-tim.github.io/posts/grafana-loki/
             See "Loki Docker Driver"
+    
 
-Storage:
 
-
-## Ports exposed on host machine.
+## Ports exposed on host
 
     3100 : Loki
     3000 : grafana 
@@ -50,4 +53,3 @@ Storage:
     13133: otel healthcheck
     55679: otel zpages for trouble shooting
 
-Internal network ports:
