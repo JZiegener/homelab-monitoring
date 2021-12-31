@@ -38,3 +38,17 @@ scrape_configs:
     scrape_timeout: 60s
     static_configs: 
       - targets: ['homelab-monitoring_speedtest_1:9091']
+  - job_name: 'pve'
+    static_configs:
+      - targets:
+        - 192.168.2.41  # Proxmox VE node.
+    metrics_path: /pve
+    params:
+      module: [default]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: homelab-monitoring_prom-pve_1:9221  # PVE exporter.

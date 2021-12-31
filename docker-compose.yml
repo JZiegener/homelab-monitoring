@@ -94,3 +94,17 @@ services:
     networks:
       - loki
 
+  prom-pve:
+    image: prompve/prometheus-pve-exporter
+    ports:
+      - 9221:9221
+    environment:
+      PVE_USER: "${PVE_USER}"
+      #PVE_PASSWORD: "${PVE_PASSWORD}"
+      PVE_TOKEN_NAME: "${PVE_TOKEN_NAME}"
+      PVE_TOKEN_VALUE: "${PVE_TOKEN_VALUE}"
+      PVE_VERIFY_SSL: "${PVE_VERIFY_SSL}"
+    restart: unless-stopped
+    networks:
+      - loki
+
