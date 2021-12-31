@@ -84,4 +84,11 @@ services:
     restart: unless-stopped
     networks:
       - loki
+  
+  speedtest:
+    image: ghcr.io/danopstech/speedtest_exporter:latest
+    ports: 9091:9091
+    restart: unless-stopped
+    networks:
+      - loki
 
