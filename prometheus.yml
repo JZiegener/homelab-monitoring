@@ -21,10 +21,6 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: 192.168.2.113:9116  # SNMP exporter.
-  - job_name: 'pve-node'
-    scrape_interval: 30s
-    static_configs:
-      - targets: ['192.168.2.41:9100']
   - job_name: 'otel-pve'
     scrape_interval: 30s
     static_configs:
@@ -33,10 +29,6 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       - targets: ['homelab-monitoring_otel-collector_1:8888']
-  - job_name: 'window-node'
-    scrape_interval: 30s
-    static_configs:
-      - targets: ['192.168.2.161:9182']
   - job_name: 'otel-windows'
     scrape_interval: 30s
     static_configs:
