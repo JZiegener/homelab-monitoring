@@ -1,10 +1,10 @@
 scrape_configs:
   - job_name: 'prometheus'
-    scrape_interval: 10s
+    scrape_interval: 60s
     static_configs:
       - targets: ['prometheus:9090']
   - job_name: 'pi-hole'
-    scrape_interval: 30s
+    scrape_interval: 60s
     static_configs:
       - targets: ['homelab-monitoring_pi-hole-exporter_1:9617']
   - job_name: 'snmp'
@@ -30,7 +30,7 @@ scrape_configs:
     static_configs:
       - targets: ['192.168.2.161:9101', '192.168.2.212:9101', '192.168.2.41:9101']
   - job_name: 'minecraft'
-    scrape_interval: 30s
+    scrape_interval: 60s
     static_configs:
       - targets: [192.168.2.113:9225]
   - job_name: 'speedtest'
