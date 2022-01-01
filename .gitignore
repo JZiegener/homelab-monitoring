@@ -3,3 +3,4 @@ prometheus/data/
 grafana/
 *.db
 .env
+acme.json
