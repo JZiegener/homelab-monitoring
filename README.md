@@ -26,16 +26,38 @@ LOKI_STORAGE=~/homelab-monitoring/loki/
 PROMTAIL_STORAGE=~/homelab-monitoring/promtail/
 GRAFANA_STORAGE=~/homelab-monitoring/grafana/
 PROMETHEUS_STORAGE=~/homelab-monitoring/prometheus/
+
+PVE_USER=metrics@pve
+PVE_TOKEN_NAME=<Proxmox token name>
+PVE_TOKEN_VALUE=<Proxmox token>
+PVE_VERIFY_SSL=false
+
+DOMAIN=example.com
+CF_API_EMAIL=<email address>
+CF_DNS_API_TOKEN=<cloud flare api token>
+BASIC_AUTH=<Hashed password>
 ```
 note: usernum is used to allow the containers write permissions to the mapped volumes
 
-## External dependencies
-    SNMP has to be enabled on router to get any data
-    Proxmox external metrics must be set up for the influxdb import 
-        use HTTP import
-    promtail is configured to scrape docker logs from the host machine.
-        Configuration instructions are available here: https://techno-tim.github.io/posts/grafana-loki/
-            See "Loki Docker Driver"
+## Traefik config
+
+### Cloudflare API Token
+Permissions
+- "Zone, Zone, READ" 
+- "Zone, DNS, EDIT" 
+
+Zone Resources
+- "Include, Specific Zone, example.com"
+
+### Basic Auth
+
+BASIC_AUTH needs to have the username and password hashed
+- `htpasswd -nb <USER> <PASSWORD>`
+
+## External configuration
+promtail is configured to scrape docker logs from the host machine.
+- Configuration instructions are available here: https://techno-tim.github.io/posts/grafana-loki/
+- See "Loki Docker Driver"
     
 
 

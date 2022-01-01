@@ -1,6 +1,8 @@
 version: "3"
 networks:
   loki:
+  proxy:
+    external: true
 services:
   loki:
     image: grafana/loki:2.4.0
@@ -100,7 +102,6 @@ services:
       - 9221:9221
     environment:
       PVE_USER: "${PVE_USER}"
-      #PVE_PASSWORD: "${PVE_PASSWORD}"
       PVE_TOKEN_NAME: "${PVE_TOKEN_NAME}"
       PVE_TOKEN_VALUE: "${PVE_TOKEN_VALUE}"
       PVE_VERIFY_SSL: "${PVE_VERIFY_SSL}"
@@ -108,3 +109,44 @@ services:
     networks:
       - loki
 
+  traefik:
+      image: traefik:latest
+      restart: unless-stopped
+      security_opt:
+        - no-new-privileges:true
+      networks:
+        - proxy
+        - loki
+      ports:
+        - 80:80
+        - 443:443
+      environment:
+        CLOUDFLARE_DNS_API_EMAIL: "${CF_API_EMAIL}"
+        CLOUDFLARE_DNS_API_TOKEN: "${CF_DNS_API_TOKEN}"
+        # - CF_API_KEY=YOU_API_KEY
+        # be sure to use the correct one depending on if you are using a token or key
+
+      command: --log.level=DEBUG
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - ${TRAEFIK_STORAGE}traefik.yml:/traefik.yml:ro
+        - ${TRAEFIK_STORAGE}acme.json:/acme.json
+        - ${TRAEFIK_STORAGE}config.yml:/config.yml:ro
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.traefik.entrypoints=http"
+        - "traefik.http.routers.traefik.rule=Host(`traefik-dashboard.local.${DOMAIN}`)"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=${BASIC_AUTH}"
+        - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+        - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+        - "traefik.http.routers.traefik-secure.entrypoints=https"
+        - "traefik.http.routers.traefik-secure.rule=Host(`traefik-dashboard.local.${DOMAIN}`)"
+        - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+        - "traefik.http.routers.traefik-secure.tls=true"
+        - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+        - "traefik.http.routers.traefik-secure.tls.domains[0].main=${DOMAIN}"
+        - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.${DOMAIN}"
+        - "traefik.http.routers.traefik-secure.service=api@internal"
+ 
