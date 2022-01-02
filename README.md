@@ -8,16 +8,13 @@ docker-compose setup for homelab monitoring
 ## Stack:
 - Prometheus: Metrics Storage
 - Loki: Log storage
-- promtail: Docker Log Scraping
+- Promtail: Docker Log Scraping
 - Grafana: Dashboards / analysis
 - OpenTelemetry: Host metrics + agent + translation
-- snmp-exporter: publish prometheus stats from snmp (router stats)
+- snmp-exporter: publish Prometheus stats from snmp (router stats)
 - pi-hole-exporter: Prometheus statistics from pi-hole
 
-## Enviroment variables:
-
-This file is intentionally NOT stored in the repository to prevent passwords and other senstive information from being imported into this repository. Username and password must be configured for the pi-hole scraper. Storage can be set to what ever location is desired
-
+## Environment variables:
 .env is as follows:
 ```
 PI_HOLE_USERNAME=username 
@@ -29,7 +26,7 @@ PROMTAIL_STORAGE=~/homelab-monitoring/promtail/
 GRAFANA_STORAGE=~/homelab-monitoring/grafana/
 PROMETHEUS_STORAGE=~/homelab-monitoring/prometheus/
 
-PVE_USER=metrics@pve
+PVE_USER=<user>@<host>
 PVE_TOKEN_NAME=<Proxmox token name>
 PVE_TOKEN_VALUE=<Proxmox token>
 PVE_VERIFY_SSL=false
@@ -57,7 +54,7 @@ BASIC_AUTH needs to have the username and password hashed
 - `htpasswd -nb <USER> <PASSWORD>`
 
 ## External configuration
-promtail is configured to scrape docker logs from the host machine.
+Promtail is configured to scrape docker logs from the host machine.
 - Configuration instructions are available here: https://techno-tim.github.io/posts/grafana-loki/
 - See "Loki Docker Driver"
     
