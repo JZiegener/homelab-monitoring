@@ -1,6 +1,8 @@
 # Summary
 docker-compose setup for homelab monitoring
 
+![](Screenshot.png)
+
 # Details
 
 ## Stack:
