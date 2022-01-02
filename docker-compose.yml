@@ -90,9 +90,16 @@ services:
   speedtest:
     image: ghcr.io/danopstech/speedtest_exporter:latest
     ports: 
-     - 9091:9091
+      - 9091:9091
     restart: unless-stopped
-    command: -port 9091
+    networks:
+      - loki
+
+  prom-pve:
+    image: prompve/prometheus-pve-exporter
+    ports:
+      - 9221: 9221
+    restart: unless-stopped
     networks:
       - loki
 
