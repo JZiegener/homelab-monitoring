@@ -34,7 +34,7 @@ scrape_configs:
     static_configs:
       - targets: [192.168.2.113:9225]
   - job_name: 'speedtest'
-    scrape_interval: 30m
+    scrape_interval: 60m
     scrape_timeout: 60s
     static_configs: 
       - targets: ['homelab-monitoring_speedtest_1:9091']
