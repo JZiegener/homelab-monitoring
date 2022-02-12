@@ -98,14 +98,6 @@ services:
   prom-pve:
     image: prompve/prometheus-pve-exporter
     ports:
-      - 9221: 9221
-    restart: unless-stopped
-    networks:
-      - loki
-
-  prom-pve:
-    image: prompve/prometheus-pve-exporter
-    ports:
       - 9221:9221
     environment:
       PVE_USER: "${PVE_USER}"

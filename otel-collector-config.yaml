@@ -33,10 +33,6 @@ extensions:
 service:
   extensions: [pprof, zpages, health_check]
   pipelines:
-    traces:
-      receivers: [otlp]
-      processors: [memory_limiter,batch]
-      exporters: [logging]
     metrics:
       receivers: [influxdb]
       processors: [memory_limiter,batch]
