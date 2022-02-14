@@ -92,6 +92,7 @@ services:
     ports: 
       - 9091:9091
     restart: unless-stopped
+    command: -port 9091 
     networks:
       - loki
 
